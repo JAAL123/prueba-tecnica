@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { obtenerClientesRequest } from "../api/clientes";
+import { obtenerClientesRequest, crearClienteRequest, eliminarClienteRequest } from "../api/clientes";
 
 const ClienteContext = createContext();
 
@@ -24,10 +24,34 @@ export function ClienteProvider({ children }) {
     }
   };
 
+  const crearCliente = async (cliente) => {
+    const res = await crearClienteRequest(cliente);
+    try {
+      setClientes([...clientes, res.data]);
+    } catch (error) {
+      console.log(res);
+    }
+  }
+
+  const eliminarCliente = async (id) => { 
+    const res = await eliminarClienteRequest(id);
+    try {
+      if(res.status === 200) {
+        const clientesFiltrados = clientes.filter(cliente => cliente.id !== id)
+        setClientes(clientesFiltrados)
+      }
+      console.log(res);
+    } catch (error) {
+      console.log(res);
+    }
+  };
+
   return (
     <ClienteContext.Provider
       value={{
         obtenerClientes,
+        crearCliente,
+        eliminarCliente,
         clientes,
       }}
     >

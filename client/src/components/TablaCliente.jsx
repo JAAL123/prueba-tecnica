@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
+
+import { useCliente } from "../context/ClientesContext";
+
 export function TablaCliente({ clientes }) {
-  console.log(clientes);
+  const { eliminarCliente } = useCliente();
+
+  // const onClick = (id) => {
+  //   console.log(id);
+  //   // eliminarCliente(id);
+  // };
   return (
     <table className="table table-striped ">
       <thead>
@@ -30,10 +38,13 @@ export function TablaCliente({ clientes }) {
                 <button type="button" className="btn btn-primary">
                   Editar
                 </button>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => eliminarCliente(cliente.id)}
+                >
                   Eliminar
                 </button>
-            
               </div>
             </th>
           </tr>

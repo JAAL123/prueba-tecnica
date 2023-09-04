@@ -10,7 +10,7 @@ function App() {
         <main className="container my-2">
           <Routes>
             <Route path="/" element={<ClientesPage />} />
-            <Route path="/clientes" element= {<FormularioRegistro/>} />
+            <Route path="/crear-cliente" element= {<FormularioRegistro/>} />
           </Routes>
         </main>
       </BrowserRouter>

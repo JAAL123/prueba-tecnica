@@ -1,4 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import { useCliente } from "../context/ClientesContext";
+import {useNavigate} from 'react-router-dom'
 
 export function FormularioRegistro() {
   const {
@@ -20,9 +22,15 @@ export function FormularioRegistro() {
     control,
     name: "documentos",
   });
+  const {crearCliente} = useCliente()
+  const navigate = useNavigate()
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    crearCliente(data)
+    navigate('/')
   });
+  const onClick = () => {
+    navigate('/')
+  }
   return (
     <div className="container my-2">
       <h1>Formulario de registro</h1>
@@ -152,9 +160,12 @@ export function FormularioRegistro() {
             </div>
           ))}
         </div>
-        <div className="mb-3">
-          <button type="submit" className="btn btn-primary">
+        <div className="flex gap-2 mb-3">
+          <button type="submit" className="btn btn-primary mx-2">
             Guardar
+          </button>
+          <button type="button" className="btn btn-danger mx-2" onClick={onClick} >
+            Cancelar
           </button>
         </div>
       </form>
