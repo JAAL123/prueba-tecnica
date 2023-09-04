@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, } from "react";
 import { useCliente } from "../context/ClientesContext";
 import {TablaCliente} from '../components/TablaCliente'
 

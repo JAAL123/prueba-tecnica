@@ -11,6 +11,7 @@ export const useCliente = () => {
   return context;
 };
 
+// eslint-disable-next-line react/prop-types
 export function ClienteProvider({ children }) {
   const [clientes, setClientes] = useState([]);
 

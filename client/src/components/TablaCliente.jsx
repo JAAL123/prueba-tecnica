@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 export function TablaCliente({ clientes }) {
   console.log(clientes);
   return (
@@ -22,14 +23,14 @@ export function TablaCliente({ clientes }) {
             <th>{cliente.documentos[0].numeroDocumento}</th>
             <th>
               <div
-                class="btn-group"
+                className="btn-group"
                 role="group"
                 aria-label="Basic mixed styles example"
               >
-                <button type="button" class="btn btn-primary">
+                <button type="button" className="btn btn-primary">
                   Editar
                 </button>
-                <button type="button" class="btn btn-danger">
+                <button type="button" className="btn btn-danger">
                   Eliminar
                 </button>
             
