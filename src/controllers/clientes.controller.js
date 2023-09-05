@@ -76,3 +76,22 @@ export const editarCliente = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const obtenerCliente = async (req,res) =>{
+  const {id} = req.params;
+  try {
+    const cliente = await Cliente.findByPk(id)
+    console.log(cliente)
+    if(cliente){
+      return res.json({
+        id: cliente.id,
+        nombre: cliente.nombre,
+        correo: cliente.correo,
+        telefono: cliente.telefono,
+      })
+    }
+    return res.status(404).json({error: "Cliente no encontrado"})
+  } catch (error) {
+    return res.status(500).json({error: error.message})
+  }
+}

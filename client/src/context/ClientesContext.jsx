@@ -1,5 +1,11 @@
 import { createContext, useContext, useState } from "react";
-import { obtenerClientesRequest, crearClienteRequest, eliminarClienteRequest } from "../api/clientes";
+import {
+  obtenerClientesRequest,
+  crearClienteRequest,
+  eliminarClienteRequest,
+  obtenerClienteRequest,
+  editarClienteRequest,
+} from "../api/clientes";
 
 const ClienteContext = createContext();
 
@@ -15,15 +21,16 @@ export const useCliente = () => {
 export function ClienteProvider({ children }) {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cliente, setCliente] = useState({}); //[{}
 
   const obtenerClientes = async () => {
     const res = await obtenerClientesRequest();
     try {
       setLoading(true);
       setClientes(res.data);
-      if(res.status === 200){
+      if (res.status === 200) {
         setLoading(false);
-      } 
+      }
     } catch (error) {
       console.log(res);
     }
@@ -36,18 +43,38 @@ export function ClienteProvider({ children }) {
     } catch (error) {
       console.log(res);
     }
-  }
+  };
 
-  const eliminarCliente = async (id) => { 
+  const eliminarCliente = async (id) => {
     const res = await eliminarClienteRequest(id);
     try {
-      if(res.status === 200) {
-        const clientesFiltrados = clientes.filter(cliente => cliente.id !== id)
-        setClientes(clientesFiltrados)
+      if (res.status === 200) {
+        const clientesFiltrados = clientes.filter(
+          (cliente) => cliente.id !== id
+        );
+        setClientes(clientesFiltrados);
       }
       console.log(res);
     } catch (error) {
       console.log(res);
+    }
+  };
+
+  const obtenerCliente = async (id) => {
+    const res = await obtenerClienteRequest(id);
+    try {
+      console.log(res);
+      setCliente(res.data);
+    } catch (error) {
+      console.log(res);
+    }
+  };
+
+  const editarCliente = async (id, cliente) => {
+    try {
+      const res = await editarClienteRequest(id, cliente);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -57,8 +84,11 @@ export function ClienteProvider({ children }) {
         obtenerClientes,
         crearCliente,
         eliminarCliente,
+        obtenerCliente,
+        editarCliente,
         clientes,
         loading,
+        cliente,
       }}
     >
       {children}

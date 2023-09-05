@@ -55,3 +55,16 @@ export const eliminarDocumento = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const obtenerDocumentos = async (req, res) => { 
+  const { idCliente } = req.params;
+  try {
+    const documentos = await Documento.findAll({ where: { idCliente } });
+    if(documentos.length === 0) {
+      return res.status(404).json({ error: "Documentos no encontrados" });
+    }
+    return res.json(documentos);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}

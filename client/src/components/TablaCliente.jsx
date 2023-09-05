@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCliente } from "../context/ClientesContext";
 
 export function TablaCliente() {
-  const { eliminarCliente,clientes,obtenerClientes } = useCliente();
+  const { eliminarCliente, clientes, obtenerClientes } = useCliente();
+  const navigate = useNavigate();
   useEffect(() => {
     obtenerClientes();
   }, []);
@@ -34,7 +36,11 @@ export function TablaCliente() {
                 role="group"
                 aria-label="Basic mixed styles example"
               >
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => navigate(`/editar-cliente/${clientes.id}`)}
+                >
                   Editar
                 </button>
                 <button
