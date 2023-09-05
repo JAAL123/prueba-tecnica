@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 
+import { useEffect } from "react";
 import { useCliente } from "../context/ClientesContext";
 
-export function TablaCliente({ clientes }) {
-  const { eliminarCliente } = useCliente();
-
-  // const onClick = (id) => {
-  //   console.log(id);
-  //   // eliminarCliente(id);
-  // };
+export function TablaCliente() {
+  const { eliminarCliente,clientes,obtenerClientes } = useCliente();
+  useEffect(() => {
+    obtenerClientes();
+  }, []);
   return (
     <table className="table table-striped ">
       <thead>
@@ -22,13 +21,13 @@ export function TablaCliente({ clientes }) {
         </tr>
       </thead>
       <tbody>
-        {clientes.map((cliente) => (
-          <tr key={cliente.id}>
-            <th>{cliente.nombre}</th>
-            <th>{cliente.correo}</th>
-            <th>{cliente.telefono}</th>
-            <th>{cliente.direcciones[0].direccion}</th>
-            <th>{cliente.documentos[0].numeroDocumento}</th>
+        {clientes.map((clientes) => (
+          <tr key={clientes?.id}>
+            <th>{clientes?.nombre}</th>
+            <th>{clientes?.correo}</th>
+            <th>{clientes?.telefono}</th>
+            <th>{clientes?.direcciones[0]?.direccion}</th>
+            <th>{clientes?.documentos[0]?.numeroDocumento}</th>
             <th>
               <div
                 className="btn-group"
@@ -41,7 +40,7 @@ export function TablaCliente({ clientes }) {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  onClick={() => eliminarCliente(cliente.id)}
+                  onClick={() => eliminarCliente(clientes.id)}
                 >
                   Eliminar
                 </button>

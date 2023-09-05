@@ -51,3 +51,16 @@ export const eliminarDireccion = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+export const obtenerDirecciones = async (req, res) => { 
+  const { idCliente } = req.params;
+  try {
+    const direcciones = await Direccion.findAll({ where: { idCliente } });
+    if(direcciones.length === 0) {
+      return res.status(404).json({ error: "Direcciones no encontradas" });
+     }
+    return res.json(direcciones);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}

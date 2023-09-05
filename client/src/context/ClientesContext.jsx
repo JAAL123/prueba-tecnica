@@ -14,11 +14,16 @@ export const useCliente = () => {
 // eslint-disable-next-line react/prop-types
 export function ClienteProvider({ children }) {
   const [clientes, setClientes] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const obtenerClientes = async () => {
     const res = await obtenerClientesRequest();
     try {
+      setLoading(true);
       setClientes(res.data);
+      if(res.status === 200){
+        setLoading(false);
+      } 
     } catch (error) {
       console.log(res);
     }
@@ -53,6 +58,7 @@ export function ClienteProvider({ children }) {
         crearCliente,
         eliminarCliente,
         clientes,
+        loading,
       }}
     >
       {children}
