@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { obtenerClienteRequest } from "../api/clientes";
+import {
+  obtenerClienteRequest,
+  obtenerDireccionesRequest,
+  obtenerDocumentosRequest,
+} from "../api/clientes";
 import { useCliente } from "../context/ClientesContext";
 export function EditarRegistro() {
   const {
@@ -20,6 +24,9 @@ export function EditarRegistro() {
     navigate("/");
   });
 
+  const [direcciones, setDirecciones] = useState([]);
+  const [documentos, setDocumentos] = useState([]);
+
   useEffect(() => {
     const cargarCliente = async () => {
       if (idCliente) {
@@ -27,6 +34,11 @@ export function EditarRegistro() {
         setValue("nombre", info.data.nombre);
         setValue("correo", info.data.correo);
         setValue("telefono", info.data.telefono);
+        const reqDirecciones = await obtenerDireccionesRequest(idCliente);
+        const reqDocumentos = await obtenerDocumentosRequest(idCliente);
+        setDirecciones(reqDirecciones.data);
+        setDocumentos(reqDocumentos.data);
+        console.log(documentos);
       }
     };
     cargarCliente();
@@ -90,6 +102,45 @@ export function EditarRegistro() {
           </button>
         </div>
       </form>
+      <hr />
+      <label htmlFor="">Direcciones</label>
+
+      <div className=" w-75 my-2 rounded">
+        <table className="table table-hover ">
+          <tbody>
+            {direcciones.map((direccion) => (
+              <tr key={direccion?.id}>
+                <th>{direccion?.direccion}</th>
+                <th className="text-end">
+                  <button className="btn btn-primary mx-2">Editar</button>
+                  <button className="btn btn-danger mx-2 ">Eliminar</button>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button className="btn btn-success">Añadir direccion</button>
+      </div>
+      <hr />
+      <label htmlFor="">Documentos</label>
+      <div className=" w-75 my-2 rounded">
+        <table className="table table-hover ">
+          <tbody>
+            {documentos.map((documento) => (
+              <tr key={documento?.id}>
+                <th>{documento?.numeroDocumento}</th>
+                <th className="text-end">
+                  <button className="btn btn-primary mx-2">Editar</button>
+                  <button className="btn btn-danger mx-2 ">Eliminar</button>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button className="btn btn-success">Añadir documento</button>
+      </div>
+      <hr />
+      <button className="btn btn-primary" onClick={() => navigate("/")}>Regresar</button>
     </div>
   );
 }

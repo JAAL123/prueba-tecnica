@@ -72,7 +72,11 @@ export function ClienteProvider({ children }) {
 
   const editarCliente = async (id, cliente) => {
     try {
+      setLoading(true)
       const res = await editarClienteRequest(id, cliente);
+      if (res.status === 200) {
+        setLoading(false)
+      }
     } catch (error) {
       console.log(error);
     }

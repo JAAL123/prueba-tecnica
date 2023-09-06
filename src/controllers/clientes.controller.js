@@ -81,7 +81,6 @@ export const obtenerCliente = async (req,res) =>{
   const {id} = req.params;
   try {
     const cliente = await Cliente.findByPk(id)
-    console.log(cliente)
     if(cliente){
       return res.json({
         id: cliente.id,

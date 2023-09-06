@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useCliente } from "../context/ClientesContext";
 
 export function TablaCliente() {
-  const { eliminarCliente, clientes, obtenerClientes } = useCliente();
+  const { eliminarCliente, clientes, obtenerClientes, loading } = useCliente();
   const navigate = useNavigate();
   useEffect(() => {
     obtenerClientes();
-  }, []);
+  }, [loading]);
   return (
     <table className="table table-striped ">
       <thead>
